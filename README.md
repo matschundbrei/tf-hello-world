@@ -50,5 +50,12 @@ $ terraform apply $PLAN
 
 ## Testing the CI/CD Pipeline
 
-In the pipeline 
+In the [CI/CD Pipelines](https://dev.sta.net/rnd/devops/helloworld-example/pipelines) section of this project, you can manually start a pipeline to run whatever is specified in `.gitlab-ci.yml`.
+
+In this case, it will use terraform to run the terraform-code in this repository.
+
+You can alter who will be greeted by setting the environment variable `TF_VAR_person_to_greet` to any value you would like to greet.
+
+Note, that this will also alter a the `local_file.greeting` resource, which results in a `./hello.txt` that will be cached in between
+pipeline stages, but ignored by the repository itself. 
 
