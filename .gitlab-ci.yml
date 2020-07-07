@@ -13,7 +13,7 @@ image:
     - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 
 variables:
-  TF_VAR_person_to_greet: "the person to greet"
+  TF_VAR_person_to_greet: "world"
   PLAN: "tf.plan"
 
 cache:
