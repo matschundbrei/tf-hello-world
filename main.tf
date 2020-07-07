@@ -22,8 +22,8 @@ provider "local" {}
 # you can set every value from an environment variable
 # prefixed with `TF_VAR_` followed by the actual name
 variable "person_to_greet" {
-  type = string
-  default = "world"
+  type        = string
+  default     = "world"
   description = "the person to greet in this example"
 }
 
@@ -49,7 +49,7 @@ resource "local_file" "greeting" {
 # The fifth and last type is the 'data' type
 # the data type is in principle just a reference to a resource
 # this seems kind of dull in this context, since I might as we
-# could just set the output to the resource directly, but with 
+# could just set the output to the resource directly, but with
 # this type you can reference resources that are either not managed
 # by that particular state or not managed by terraform at all.
 # This particular data-source has a 'depends_on' parameter set.
@@ -57,7 +57,7 @@ resource "local_file" "greeting" {
 # will be applied, before this file will get referenced.
 
 data "local_file" "greetfile" {
-  filename = local.greetfile_name
+  filename   = local.greetfile_name
   depends_on = [local_file.greeting]
 }
 
