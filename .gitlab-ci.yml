@@ -6,11 +6,11 @@
 # for detailed documentation please visit:
 # https://docs.gitlab.com/ee/ci/yaml/
 
- image:
-   name: hashicorp/terraform:0.12.26
-   entrypoint:
-     - '/usr/bin/env'
-     - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+image:
+  name: hashicorp/terraform:0.12.26
+  entrypoint:
+    - '/usr/bin/env'
+    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 
 variables:
   TF_VAR_person_to_greet: "the person to greet"
