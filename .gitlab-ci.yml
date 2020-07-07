@@ -1,0 +1,55 @@
+---
+# .gitlab-ci.yaml
+# Terraform CI/CD runner
+# Author: Jan Kapellen <jan.kapellen@statravel.com>
+#
+# for detailed documentation please visit:
+# https://docs.gitlab.com/ee/ci/yaml/
+
+ image:
+   name: hashicorp/terraform:0.12.26
+   entrypoint:
+     - '/usr/bin/env'
+     - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+
+variables:
+  TF_VAR_person_to_greet: "the person to greet"
+  PLAN: "tf.plan"
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .terraform
+    - ./hello.txt
+
+before_script:
+  - echo "About to greet ${TF_VAR_person_to_greet}"
+  - terraform version
+  - terraform init
+
+stages:
+  - validate
+  - build
+  - apply
+
+validate:
+  stage: validate
+  script:
+    - terraform validate
+
+build:
+  stage: build
+  script:
+    - terraform plan -out $PLAN
+  artifacts:
+    name: plan
+    paths:
+      - $PLAN
+
+apply:
+  stage: apply
+  script:
+    - terraform apply -input=false $PLAN
+  dependencies:
+    - build
+
