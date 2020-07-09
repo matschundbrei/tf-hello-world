@@ -21,6 +21,7 @@ cache:
   paths:
     - .terraform
     - ./hello.txt
+    - terraform.tfstate
 
 before_script:
   - echo "About to greet ${TF_VAR_person_to_greet}"
