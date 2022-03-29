@@ -5,15 +5,19 @@
 # https://www.terraform.io/docs/configuration/syntax.html
 #
 # Hashicorp has six different kinds of top level elements
+# provider, variable, output, resource, data and local
 # I will use all of them now:
 
-# a provider is usually needed to signal the cli
-# that you want to use this provider.
+# a provider in Terraform is in general an external software
+# that gives you access to a set of downstream resources and
+# data-objects, that are prefixed with the provider name.
 # This is particularly important, as it ensures that on
-# `terraform init` being called, the specific provider
+# `terraform init` being called, the specified providers
 # will be installed into the `.terraform` folder.
-# to be honest in this case, it's not, but it does not hurt
-# to put it in here.
+# Usually you won't have to specify built-in providers like `local`
+# but it is still best-practice to do so.
+# provider configurations can contain a target compatibility version,
+# installation source, credentials and more.
 provider "local" {}
 
 # you can define input-variables to the cli
@@ -27,8 +31,8 @@ variable "person_to_greet" {
   description = "the person to greet in this example"
 }
 
-# outputs do work very simlilat to variables, you can set them and they
-# will be spit out by the cli at the end of an 'apply' run.
+# outputs do work very simlilar to variables, you can set them and they
+# will be shown in the standart output by the cli at the end of an 'apply' run.
 # This can also be used to emit variables to be set in a module
 # https://www.terraform.io/docs/configuration/modules.html
 
@@ -46,13 +50,13 @@ resource "local_file" "greeting" {
   filename = "${path.module}/hello.txt"
 }
 
-# The fifth and last type is the 'data' type
+# The fifth is the 'data' type
 # the data type is in principle just a reference to a resource
 # this seems kind of dull in this context, since I might as we
 # could just set the output to the resource directly, but with
 # this type you can reference resources that are either not managed
 # by that particular state or not managed by terraform at all.
-# This particular data-source has a 'depends_on' parameter set.
+# This particular data-source has a 'depends_on' meta-argument set.
 # I have set this, so that any changes to the above resource
 # will be applied, before this file will get referenced.
 
